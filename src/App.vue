@@ -1,15 +1,23 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <NavLogRegPage></NavLogRegPage>
+
+  <NavClient></NavClient>
+  <NavRieltor></NavRieltor>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import NavClient from './components/UI/NavClient.vue'
+import NavRieltor from './components/UI/NavRieltor.vue'
+import NavLogRegPage from './components/UI/NavLogRegPage.vue'
+
+
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    NavClient,
+    NavRieltor,
+    NavLogRegPage
   }
 }
 </script>
@@ -21,6 +29,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
