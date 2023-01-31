@@ -1,23 +1,17 @@
 <template>
-  <NavLogRegPage></NavLogRegPage>
-
-  <NavClient></NavClient>
-  <NavRieltor></NavRieltor>
+<login-page></login-page>
 </template>
 
 <script>
-import NavClient from './components/UI/NavClient.vue'
-import NavRieltor from './components/UI/NavRieltor.vue'
-import NavLogRegPage from './components/UI/NavLogRegPage.vue'
+import LoginPage from "@/components/Pages/LoginPage";
+
 
 
 
 export default {
   name: 'App',
   components: {
-    NavClient,
-    NavRieltor,
-    NavLogRegPage
+    LoginPage
   }
 }
 </script>
