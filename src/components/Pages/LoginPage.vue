@@ -166,7 +166,6 @@ export default {
   width: 380px;
   height: 50px;
   border-color: #5F77BF;
-
 }
 
 @media screen and (max-width: 550px) {
