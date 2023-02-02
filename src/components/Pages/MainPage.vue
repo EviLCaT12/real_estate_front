@@ -101,13 +101,13 @@
 
   </div>
 
-  <div class="container first-container">
+  <div class="container first-container" v-for="post in posts" :key="post.id">
     <div class="row cardObject-container">
       <div class="col d-flex cardObject-maincontent">
         <img class="cardObject-img" src="https://www.fontanka.ru/longreads/69055537/2020/images/tild3236-3039-4438-b935-366561386233__48.jpg" alt="dd">
 
         <div class="cardObject-maincontent-textblock">
-          <a href="#" class="cardObject-title">Просторная двушка с ремонтом! Ахуеть!</a>
+          <a href="#" class="cardObject-title">{{post.title}}</a>
 
               <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path class="svg-star-unclicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
@@ -118,16 +118,9 @@
 <!--            <path class="svg-star-clicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>-->
 <!--          </svg>-->
 
-          <p class="cardObject-undertitle">2 к, 97 м<sup>2</sup>, 5 этаж</p>
-          <p class="cardObject-adress">Улица Пушкина 37, квартира 777</p>
-          <p class="cardObject-cost">30 070 000 ₽</p>
-          <p class="cardObject-costOfMeter">310 000 ₽/м<sup>2</sup></p>
-          <p class="cardObject-info">Lorem ipsum dolor sit amet, consectetur adipiscing
-            elit. Facilisi fringilla egestas condimentum diam lectus tristique metus.
-            Vitae eget donec at mattis etiam venenatis, faucibus vitae. Laoreet amet,
-            elementum, tempor viverra neque leo. A convallis in velit vitae varius purus
-            vitae. varius purus vitae. varius purus vitae. varius purus vitae. varius purus
-            vitae. varius purus vitae. varius purus vitae. varius purus vitae...</p>
+          <p class="cardObject-adress">{{post.address}}</p>
+          <p class="cardObject-cost">{{post.price}}</p>
+          <p class="cardObject-info">{{post.description}}</p>
 
         </div>
       </div>
@@ -156,68 +149,41 @@
     </div>
   </div>
 
-  <div class="container first-container">
-    <div class="row cardObject-container">
-      <div class="col d-flex cardObject-maincontent">
-        <img class="cardObject-img" src="https://www.fontanka.ru/longreads/69055537/2020/images/tild3236-3039-4438-b935-366561386233__48.jpg" alt="dd">
-
-        <div class="cardObject-maincontent-textblock">
-          <a href="#" class="cardObject-title">Просторная двушка с ремонтом! Ахуеть!</a>
-
-          <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path class="svg-star-unclicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-
-          <!-- Если объект в избранном то... -->
-          <!--          <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-          <!--            <path class="svg-star-clicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>-->
-          <!--          </svg>-->
-
-          <p class="cardObject-undertitle">2 к, 97 м<sup>2</sup>, 5 этаж</p>
-          <p class="cardObject-adress">Улица Пушкина 37, квартира 777</p>
-          <p class="cardObject-cost">30 070 000 ₽</p>
-          <p class="cardObject-costOfMeter">310 000 ₽/м<sup>2</sup></p>
-          <p class="cardObject-info">Lorem ipsum dolor sit amet, consectetur adipiscing
-            elit. Facilisi fringilla egestas condimentum diam lectus tristique metus.
-            Vitae eget donec at mattis etiam venenatis, faucibus vitae. Laoreet amet,
-            elementum, tempor viverra neque leo. A convallis in velit vitae varius purus
-            vitae. varius purus vitae. varius purus vitae. varius purus vitae. varius purus
-            vitae. varius purus vitae. varius purus vitae. varius purus vitae...</p>
-
-        </div>
-      </div>
-      <div class="col-3">
-        <div class="cardOwner">
-          <div class="cardOwner-wrapper d-flex  justify-content-center">
-            <img class="cardOwner-img" src="https://s0.rbk.ru/v6_top_pics/media/img/9/14/754979567615149.jpg" alt="NO PHOTO??">
-          </div>
-          <div class="cardOwner-wrapper d-flex  justify-content-center">
-            <p class="cardOwner-username">Abobus20071338</p>
-          </div>
-          <div class="cardOwner-wrapper d-flex  justify-content-center">
-            <p class="cardOwner-role">Владелец</p>
-          </div>
-          <div class="cardOwner-wrapper d-flex  justify-content-center">
-            <button class="btn btn-primary cardOwner-btn">Профиль</button>
-          </div>
-          <div class="cardOwner-wrapper d-flex  justify-content-center">
-            <button class="btn btn-primary cardOwner-btn cardOwner-btn-number">+79249999999</button>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-  </div>
 </template>
 
 
 <script>
+import axios from "axios";
 import NavRieltor from "@/components/UI/NavRieltor";
 export default {
   name: "MainPage",
   components: {NavRieltor},
+  data() {
+    return {
+      isAuthorized: localStorage.getItem('token') != null,
+      posts: [{
+        title: "",
+        address: "",
+        description: "",
+        date: "",
+        price: "",
+        preview: "",
+      }],
+    }
+  },
+  methods: {
+    async fetchPosts() {
+      if (this.isAuthorized)
+        axios.defaults.headers.common['Authorization'] = `Token ${localStorage.getItem('token')}`
+      else
+        console.log("I'm not authorized!")
+      const response = await axios.get('http://95.154.68.102/api/api/adverts/')
+      this.posts = response.data
+    },
+  },
+  mounted() {
+    this.fetchPosts()
+  }
 }
 </script>
 

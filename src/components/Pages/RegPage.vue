@@ -110,7 +110,7 @@ export default {
           password: this.User.password
         })
             .then(() => {
-              axios.post('\'http://95.154.68.102/api/token/login/', {
+              axios.post('http://95.154.68.102/api/token/login/', {
                 login: this.User.login,
                 password: this.User.password
               })

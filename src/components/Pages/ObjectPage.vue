@@ -1,5 +1,4 @@
 <template>
-  <nav-client></nav-client>
 
   <div class="container first-container">
 
@@ -88,11 +87,9 @@
 </template>
 
 <script>
-import NavClient from "@/components/UI/NavClient";
 
 export default {
   name: "ObjectPage",
-  components: {NavClient}
 
 }
 </script>
