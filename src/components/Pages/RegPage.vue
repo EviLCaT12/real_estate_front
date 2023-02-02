@@ -18,7 +18,7 @@
             class="form-control inp "
             type="text"
             placeholder="Введите логин"
-            v-model="login"
+            v-model="User.login"
         >
       </div>
 
@@ -30,7 +30,7 @@
             class="form-control inp"
             type="email"
             placeholder="Введите ваш e-mail"
-            v-model="mail"
+            v-model="User.mail"
         >
       </div>
 
@@ -40,9 +40,9 @@
       <div class="row">
         <input
             class="form-control inp"
-            type="email"
+            type="text"
             placeholder="Введите ваш номер телефона"
-            v-model="phone"
+            v-model="User.phone"
         >
       </div>
 
@@ -54,7 +54,7 @@
             class="form-control inp"
             type="password"
             placeholder="Введите пароль"
-            v-model="password"
+            v-model="User.password"
         >
       </div>
 
@@ -79,14 +79,61 @@
 
   <div class="container container-2 d-flex justify-content-center rounded">
     <div class="link-div row justify-content-center ">
-      <p class="p-link">Уже есть аккаунт? <a class="link" @click="$router.push('/login')">Войдите</a></p>
+      <p class="p-link">Уже есть аккаунт? <router-link to="/login"> Войти </router-link></p>
     </div>  </div>
 </template>
 
 
 <script>
+import axios from "axios";
 export default {
-  name: "RegPage"
+  name: "RegPage",
+  data () {
+    return {
+      passwordConfirm: "",
+      User: {
+        login: "",
+        mail: "",
+        phone: "",
+        password: ""
+      }
+    }
+  },
+  methods: {
+
+    createUser() {
+      if(this.User.password === this.passwordConfirm) {
+        axios.post('http://95.154.68.102/api/users/', {
+          login: this.User.login,
+          mail: this.User.mail,
+          phone: this.User.phone,
+          password: this.User.password
+        })
+            .then(() => {
+              axios.post('\'http://95.154.68.102/api/token/login/', {
+                login: this.User.login,
+                password: this.User.password
+              })
+                  .then((response) => {
+                    localStorage.setItem('token', response.data.auth_token);
+                    axios.defaults.headers.common['Authorization'] = `Token ${response.data.auth_token}`
+                    this.$router.push('/')
+                  })
+            })
+            .then((res) => {
+              console.log('Serve answer', res)
+              this.$router.push('/')
+            }) //Только для отладки, не забыть убрать
+            .catch(function (e) {
+              console.log(e)
+            })
+      }
+      else {
+        alert("Введённые пароли не совпадают");
+        this.passwordConfirm = "";
+      }
+    }
+  }
 }
 </script>
 

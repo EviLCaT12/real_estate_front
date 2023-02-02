@@ -1,18 +1,14 @@
 <template>
-  <object-page></object-page>
+  <router-view></router-view>
 </template>
 
 <script>
-import ObjectPage from "@/components/Pages/ObjectPage";
 
 
 
 
 export default {
   name: 'App',
-  components: {
-    ObjectPage,
-  }
 }
 </script>
 
