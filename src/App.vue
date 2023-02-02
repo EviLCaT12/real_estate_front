@@ -1,9 +1,9 @@
 <template>
-<login-page></login-page>
+  <main-page></main-page>
 </template>
 
 <script>
-import LoginPage from "@/components/Pages/LoginPage";
+import MainPage from "@/components/Pages/MainPage";
 
 
 
@@ -11,7 +11,7 @@ import LoginPage from "@/components/Pages/LoginPage";
 export default {
   name: 'App',
   components: {
-    LoginPage
+    MainPage,
   }
 }
 </script>
@@ -21,7 +21,6 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 </style>
