@@ -241,12 +241,16 @@ export default {
   background-color: #F3F3F3;
   border-radius: 10px;
   padding-top: 20px;
+  padding-bottom: 20px;
+
 }
 
 .cardOwner-img{
   width: 114px;
   height: 102px;
   border-radius: 100%;
+  margin-bottom: 10px;
+
 }
 
 .cardOwner-username{
@@ -338,7 +342,7 @@ export default {
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
-  line-height: 18px;
+  line-height: 25px;
   color: #000000;
 }
 

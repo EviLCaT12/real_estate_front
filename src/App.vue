@@ -1,9 +1,9 @@
 <template>
-  <main-page></main-page>
+  <MyObjects></MyObjects>
 </template>
 
 <script>
-import MainPage from "@/components/Pages/MainPage";
+import MyObjects from "@/components/Pages/MyObjects";
 
 
 
@@ -11,7 +11,7 @@ import MainPage from "@/components/Pages/MainPage";
 export default {
   name: 'App',
   components: {
-    MainPage,
+    MyObjects,
   }
 }
 </script>
