@@ -1,9 +1,9 @@
 <template>
+  <NavRieltor></NavRieltor>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
-  <nav-client></nav-client>
   <div class="container first-container">
 
     <div class="row search-uprow">
@@ -214,10 +214,10 @@
 
 
 <script>
-import NavClient from "@/components/UI/NavClient";
+import NavRieltor from "@/components/UI/NavRieltor";
 export default {
   name: "MainPage",
-  components: {NavClient}
+  components: {NavRieltor},
 }
 </script>
 
