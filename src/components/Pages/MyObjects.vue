@@ -76,11 +76,22 @@ export default {
 
 <style scoped>
 
+.cardOwner-role{
+
+  font-family: 'Inter',serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 18px;
+
+  color: #4E5454;
+}
+
 .first-container{
   background-color: white;
   box-shadow: 0 0 3px 3px gray;
   border-radius: 10px;
-  padding: 10px;
+  padding: 20px;
   margin-top: 34px;
   margin-bottom: 34px;
 }
@@ -113,12 +124,16 @@ export default {
   background-color: #F3F3F3;
   border-radius: 10px;
   padding-top: 20px;
+  padding-bottom: 20px;
+
 }
 
 .cardOwner-img{
   width: 114px;
   height: 102px;
   border-radius: 100%;
+  margin-bottom: 10px;
+
 }
 
 .cardOwner-username{
@@ -210,7 +225,7 @@ export default {
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
-  line-height: 18px;
+  line-height: 25px;
   color: #000000;
 }
 
