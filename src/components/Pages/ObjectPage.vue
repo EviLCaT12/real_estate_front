@@ -94,9 +94,9 @@ export default {
   },
   methods: {
     async getCurrentObject() {
-      const response = await axios.get('http://95.154.68.102/api/adverts/' + this.$route.params.id)
+      const response = await axios.get('http://95.154.68.102/api/adverts/' + this.$route.params.id + '/')
       this.post = response.data
-      const res = await axios.get(this.post.owner)
+      const res = await axios.get(this.post.owner + '/')
       this.user = res.data
       console.log(this.post)
     },

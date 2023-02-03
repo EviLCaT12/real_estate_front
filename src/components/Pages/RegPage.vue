@@ -2,8 +2,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <header-log-page></header-log-page>
-
+<nav-log-reg-page></nav-log-reg-page>
   <div class="container container-1 d-flex justify-content-center rounded">
     <form class="frm" action="" @submit.prevent="createUser">
       <div class="row justify-content-center ">
@@ -86,8 +85,10 @@
 
 <script>
 import axios from "axios";
+import NavLogRegPage from "@/components/UI/NavLogRegPage";
 export default {
   name: "RegPage",
+  components: {NavLogRegPage},
   data () {
     return {
       passwordConfirm: "",
@@ -100,33 +101,22 @@ export default {
     }
   },
   methods: {
-
     createUser() {
       if(this.User.password === this.passwordConfirm) {
-        axios.post('http://95.154.68.102/api/users/', {
-          login: this.User.login,
-          mail: this.User.mail,
+        axios.post('http://95.154.68.102/api/auth/users/', {
+          username: this.User.login,
           phone: this.User.phone,
           password: this.User.password
+        }).then(() => {
+          axios.post('http://95.154.68.102/api/auth/token/login/',{
+            username: this.User.login,
+            password: this.User.password
+          }).then((response) => {
+            localStorage.setItem('token', response.data.auth_token);
+            axios.defaults.headers.common['Authorization'] = `Token ${response.data.auth_token}`
+            this.$router.push('/')
+          })
         })
-            .then(() => {
-              axios.post('http://95.154.68.102/api/token/login/', {
-                login: this.User.login,
-                password: this.User.password
-              })
-                  .then((response) => {
-                    localStorage.setItem('token', response.data.auth_token);
-                    axios.defaults.headers.common['Authorization'] = `Token ${response.data.auth_token}`
-                    this.$router.push('/')
-                  })
-            })
-            .then((res) => {
-              console.log('Serve answer', res)
-              this.$router.push('/')
-            }) //Только для отладки, не забыть убрать
-            .catch(function (e) {
-              console.log(e)
-            })
       }
       else {
         alert("Введённые пароли не совпадают");

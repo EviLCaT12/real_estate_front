@@ -9,9 +9,14 @@
         <div class="cardOwner-wrapper d-flex  justify-content-center">
           <p class="underavatar-p">{{user.username}}</p>
         </div>
-        <div class="cardOwner-wrapper d-flex  justify-content-center">
-          <button class="btn btn-primary cardOwner-btn" v-if="isAuthorized && isCurrentUser">Изменить</button>
-        </div>
+        <form @submit="changeAvatar">
+          <div class="form-input">
+            <input type="file" ref="file" @input="handleFileUpload">
+          </div>
+          <div class="form-btn">
+            <button class="btn-photo">Поменять</button>
+          </div>
+        </form>
       </div>
       <div class="profile-info-text-col col-3 ">
         <p class="profile-info-p">{{user.phone}}</p>
@@ -52,15 +57,8 @@
 
         </div>
       </div>
-
-
     </div>
   </div>
-
-
-
-
-
 </template>
 
 <script>
@@ -83,15 +81,31 @@ export default {
    async checkUser() {
       if (this.isAuthorized) {
         axios.defaults.headers.common['Authorization'] = `Token ${localStorage.getItem('token')}`
-        const response = await axios.get('http://95.154.68.102/api/auth/users/me')
-        this.isCurrentUser = (response.data.id === this.$route.params.id)
+        const response = await axios.get('http://95.154.68.102/api/users/me/', {
+          token: localStorage.getItem('token')
+        })
+        this.isCurrentUser = (response.data.id == this.$route.params.id)
         this.currentUserId = response.data.id
       }
     },
     async getUserData() {
-     const res = await axios.get('http://95.154.68.102/api/users/' + this.$route.params.id)
+     const res = await axios.get('http://95.154.68.102/api/users/' + this.$route.params.id + '/')
       this.user = res.data
       this.file = this.user.avatar
+    },
+    handleFileUpload() {
+      this.file = this.$refs.file.files[0]
+    },
+    changeAvatar() {
+      const formData = new FormData()
+      formData.append('avatar', this.file)
+      axios.patch('http://95.154.68.102/api/users/' + this.user.id + '/', formData, {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded'}
+      }).then(() => {
+        this.$router.go(0)
+      }).catch((error) => {
+        console.log(error)
+      })
     }
   },
   mounted() {

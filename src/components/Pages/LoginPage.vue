@@ -2,7 +2,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <header-log-page></header-log-page>
+<nav-log-reg-page></nav-log-reg-page>
 
   <div class="container container-1 d-flex justify-content-center rounded">
     <form class="frm" action="" @submit.prevent="authorize">
@@ -52,9 +52,11 @@
 <script>
 
 import axios from "axios";
+import NavLogRegPage from "@/components/UI/NavLogRegPage";
 
 export default {
   name: "LoginPage",
+  components: {NavLogRegPage},
   data() {
     return {
       isAuthorized: localStorage.getItem('token') != null,
@@ -65,7 +67,7 @@ export default {
   },
   methods: {
     authorize() {
-      axios.post('http://95.154.68.102/api/token/login/',{
+      axios.post('http://95.154.68.102/api/auth/token/login/',{
         username: this.login,
         password: this.password
       }).then((response) => {

@@ -184,10 +184,10 @@ export default {
   },
   methods: {
     async fetchPosts() {
-     // if (this.isAuthorized)
-      //  axios.defaults.headers.common['Authorization'] = `Token ${localStorage.getItem('token')}`
-     // else
-       // console.log("I'm not authorized!")
+      if (this.isAuthorized)
+        axios.defaults.headers.common['Authorization'] = `Token ${localStorage.getItem('token')}`
+      else
+        console.log("I'm not authorized!")
       const response = await axios.get('http://95.154.68.102/api/adverts/')
       this.posts = response.data
       for (let i = 0; i < this.posts.length; ++i) {
