@@ -36,7 +36,7 @@
         <!--            <path class="svg-star-clicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>-->
         <!--          </svg>-->
         <div class="address-block d-flex">
-          <p class="address-p-1">2 к, 97 м2, 5 этаж</p>
+          <p class="address-p-1">2 к, 97 м<sup>2</sup>, 5 этаж</p>
           <p class="address-p-2">Улица Пушкина 37, квартира 777</p>
         </div>
         <div class="price-block d-flex">

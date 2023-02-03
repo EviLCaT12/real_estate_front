@@ -1,9 +1,9 @@
 <template>
-  <object-page></object-page>
+  <profile-page></profile-page>
 </template>
 
 <script>
-import ObjectPage from "@/components/Pages/ObjectPage";
+import ProfilePage from "@/components/Pages/ProfilePage";
 
 
 
@@ -11,7 +11,7 @@ import ObjectPage from "@/components/Pages/ObjectPage";
 export default {
   name: 'App',
   components: {
-    ObjectPage,
+    ProfilePage,
   }
 }
 </script>
