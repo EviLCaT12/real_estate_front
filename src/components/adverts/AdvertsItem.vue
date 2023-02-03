@@ -7,17 +7,14 @@
         <div class="cardObject-maincontent-textblock">
           <a @click="this.$router.push('/object/' + post.id)" class="cardObject-title">{{post.title}}</a>
 
-          <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg"  v-if="!post.is_favorite" >
-            <path class="svg-star-unclicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg"  v-else>
+          <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" v-if="post.is_favorite" @click="awayFavorite">
             <path class="svg-star-clicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
+          <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" v-else @click="addFavorite">
+            <path class="svg-star-unclicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
 
-          <!-- Если объект в избранном то... -->
-          <!--          <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-          <!--            <path class="svg-star-clicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>-->
-          <!--          </svg>-->
+
 
           <p class="cardObject-undertitle">Этаж: {{ post.floor }}</p>
           <p class="cardObject-adress">Улица: {{ post.street }}</p>
@@ -72,6 +69,16 @@ export default {
     async getPostOwner() {
       const response = await axios.get(this.post.owner)
       this.user = response.data
+    },
+    async addFavorite() {
+      axios.get('http://95.154.68.102/api/adverts/' + this.post.id + '/?favorite=kalich/')
+      // eslint-disable-next-line vue/no-mutating-props
+      this.post.is_favorite = true
+    },
+    async awayFavorite() {
+      axios.get('http://95.154.68.102/api/adverts/' + this.post.id + '/?favorite=kalich/')
+      // eslint-disable-next-line vue/no-mutating-props
+      this.post.is_favorite = false
     }
   },
   mounted() {

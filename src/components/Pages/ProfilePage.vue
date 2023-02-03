@@ -1,6 +1,5 @@
 <template>
-  <div v-if="isRealtor"><NavRieltor></NavRieltor></div>
-  <div v-else><nav-client></nav-client></div>
+  <NavRieltor></NavRieltor>
   <div class="container first-container">
     <div class="row profile-info-row d-flex">
       <div class="profile-info-img-col col-3 ">
@@ -21,7 +20,7 @@
         <p class="profile-info-p">{{user.phone}}</p>
       </div>
       <div class="profile-info-text-col col ">
-        <p class="profile-info-p" v-if="user.is_realtor">Риеэтор</p>
+        <p class="profile-info-p" v-if="user.is_realtor">Риеэлтор</p>
         <p class="profile-info-p" v-else>Пользователь</p>
         <p class="profile-info-p">{{user.mail}}</p>
       </div>
@@ -62,12 +61,11 @@
 
 <script>
 
-import NavClient from "@/components/UI/NavClient";
 import NavRieltor from "@/components/UI/NavRieltor";
 import axios from "axios";
 export default {
   name: "ProfilePage",
-  components: {NavClient,NavRieltor},
+  components: {NavRieltor},
   data() {
     return {
       isRealtor: false,

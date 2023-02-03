@@ -20,9 +20,13 @@
           <li class="nav-item ps-lg-5 px-lg-3">
             <button class="btn block "  @click="$router.push('/')" >Объекты</button>
           </li>
-          <li class="nav-item px-lg-3">
+          <li class="nav-item px-lg-3" v-if="user.is_realtor">
             <button class="btn block" v-if="isAuthorized" @click="$router.push('/clients')">Клиенты</button>
             <button class="btn block " v-else @click="$router.push('/login')" >Клиенты</button>
+          </li>
+          <li class="nav-item px-lg-3" v-else>
+            <button class="btn block" v-if="isAuthorized" @click="$router.push('/rieltors')">Риэлторы</button>
+            <button class="btn block" v-else @click="$router.push('/login')">Риэлторы</button>
           </li>
           <li class="nav-item px-lg-3">
             <button class="btn block" v-if="isAuthorized" @click="$router.push('/object')" >Мои объекты</button>
@@ -43,7 +47,7 @@
             </svg>
           </button>
 
-          <button class="svg float-end" v-if="isAuthorized" @click="getCurrentUser">
+          <button class="svg float-end" v-if="isAuthorized" @click="this.$router.push('/users/' + this.user.id)">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
               <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
               <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
@@ -73,7 +77,7 @@ export default {
     return {
       isAuthorized: localStorage.getItem('token') != null,
       token: localStorage.getItem('token'),
-      userId: ''
+      user: {}
     }
   },
   methods: {
@@ -84,13 +88,16 @@ export default {
       this.$router.go(0)
     },
     getCurrentUser() {
-      axios.get('http://95.154.68.102/api/auth/users/me/', {
+      axios.get('http://95.154.68.102/api/users/me/', {
         token: this.token
       }).then((res) => {
-        this.userId = res.data.id
-        this.$router.push('/users/' + this.userId)
+        this.user = res.data
+        console.log(this.user.id)
       })
     }
+  },
+  mounted() {
+    this.getCurrentUser()
   }
 }
 </script>

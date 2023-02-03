@@ -1,6 +1,5 @@
 <template>
-  <div v-if="isRealtor"><NavRieltor></NavRieltor></div>
-  <div v-else><nav-client></nav-client></div>
+  <nav-rieltor></nav-rieltor>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -45,7 +44,7 @@
       <div class="col">
         <p class="p-search">Стоимость от</p>
         <input
-            v-model="obj.low_limit_price"
+            v-model="obj.price_min"
             class="form-control inp inp-small"
             type="text"
             placeholder="18"
@@ -54,7 +53,7 @@
       <div class="col">
         <p class="p-search">Стоимость до</p>
         <input
-            v-model="obj.top_limit_price"
+            v-model="obj.price_max"
             class="form-control inp inp-middle"
             type="text"
             placeholder="18"
@@ -73,6 +72,7 @@
       <div class="col">
         <p class="p-search">Этажность</p>
         <input
+            v-model="obj.floor"
             class="form-control inp inp-small"
             type="text"
             placeholder="3"
@@ -110,11 +110,10 @@
 <script>
 import axios from "axios";
 import NavRieltor from "@/components/UI/NavRieltor";
-import NavClient from "@/components/UI/NavRieltor";
 import advertsList from "@/components/adverts/AdvertsList";
 export default {
   name: "MainPage",
-  components: {NavClient, NavRieltor, advertsList},
+  components: { NavRieltor, advertsList},
   data() {
     return {
       isAuthorized: localStorage.getItem('token') != null,
@@ -124,9 +123,9 @@ export default {
         city: "",
         street: "",
         obj_type: "",
-        low_limit_price: "",
-        top_limit_price: "",
-        floor: "",
+        price_min: "",
+        price_max: "",
+        floor: ""
       }
     }
   },
@@ -150,14 +149,16 @@ export default {
       }
       let req = ''
       for (let i = 0; i < name.length; i++) {
-        if (i === name.length - 1) {
+        if (i == name.length - 1) {
           req += name[i] + '=' + value[i]
         }
+
         else
           req += name[i] + '=' + value[i] + '&';
       }
-      const response = await axios.get('http://95.154.68.102/api/adverts?' + req)
+      const response = await axios.get('http://95.154.68.102/api/adverts/?' + req)
       this.posts = response.data
+      console.log(req)
     },
     async checkRealtor() {
       const res = await axios.get('http://95.154.68.102/api/users/me/', {
@@ -170,7 +171,7 @@ export default {
   mounted() {
     this.fetchPosts()
     this.checkRealtor()
-  }
+  },
 }
 </script>
 

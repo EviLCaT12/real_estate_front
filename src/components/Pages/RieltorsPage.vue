@@ -1,5 +1,5 @@
 <template>
-  <nav-client/>
+  <nav-rieltor></nav-rieltor>
   <div class="content">
     <h3 style="text-align: start; margin-left: 10px"><strong>Ваш риелтор:</strong></h3>
     <RieltorCard/>
@@ -16,12 +16,12 @@
 
 <script>
 import RieltorCard from "@/components/UI/RieltorCard";
-import NavClient from "@/components/UI/NavClient";
 import RieltorCardSub from "@/components/UI/RieltorCardSub";
 import RieltorCardNone from "@/components/UI/RieltorCardNone";
+import NavRieltor from "@/components/UI/NavRieltor";
 export default {
   name: "RieltorsPage",
-  components: {RieltorCardNone, RieltorCardSub, NavClient, RieltorCard}
+  components: {RieltorCardNone, RieltorCardSub, RieltorCard,NavRieltor}
 }
 </script>
 

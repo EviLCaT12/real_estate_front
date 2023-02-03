@@ -1,6 +1,5 @@
 <template>
-  <div v-if="isRealtor"><NavRieltor></NavRieltor></div>
-  <div v-else><nav-client></nav-client></div>
+  <NavRieltor></NavRieltor>
   <div class="forms">
     <ObjectsFormAdd/>
     <ObjectsFormChange/>
@@ -13,12 +12,11 @@
 import ObjectsTable from "@/components/UI/ObjectsTable.vue";
 import ObjectsFormAdd from "@/components/UI/ObjectsFormAdd.vue";
 import ObjectsFormChange from "@/components/UI/ObjectsFormChange.vue";
-import NavClient from "@/components/UI/NavClient.vue";
 import navRieltor from "@/components/UI/NavRieltor";
 import axios from "axios";
 export default {
   name: "ObjectsPage",
-  components: {NavClient, navRieltor, ObjectsFormChange, ObjectsFormAdd, ObjectsTable},
+  components: {navRieltor, ObjectsFormChange, ObjectsFormAdd, ObjectsTable},
   data() {
     return {
       isRealtor: false
@@ -30,7 +28,6 @@ export default {
         token: localStorage.getItem('token')
       })
       this.isRealtor = res.data.is_realtor
-      console.log(this.isRealtor)
     }
   },
   mounted() {

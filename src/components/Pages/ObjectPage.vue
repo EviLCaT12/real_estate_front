@@ -1,6 +1,5 @@
 <template>
-  <div v-if="isRealtor"><NavRieltor></NavRieltor></div>
-  <div v-else><nav-client></nav-client></div>
+  <NavRieltor></NavRieltor>
   <div class="container first-container">
 
     <div id="carouselExampleControls" class="carousel-edit carousel slide" data-bs-ride="carousel">
@@ -27,14 +26,13 @@
     <div class="row cardObject-container">
       <div class="cardObject-maincontent-textblock col">
         <a href="#" class="cardObject-title">{{post.title}}</a>
-
-        <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" v-if="isAuthorized">
+        <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" v-if="post.is_favorite" @click="awayFavorite">
+          <path class="svg-star-clicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" v-else @click="addFavorite">
           <path class="svg-star-unclicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <!-- Если объект в избранном то звездочка желтая... -->
-        <!--          <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-        <!--            <path class="svg-star-clicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>-->
-        <!--          </svg>-->
+
         <div class="address-block d-flex">
           <p class="address-p-1">{{post.floor}}</p>
           <p class="address-p-2">{{post.street}}</p>
@@ -84,11 +82,10 @@
 
 
 import axios from "axios";
-import navClient from "@/components/UI/NavClient";
 import navRieltor from "@/components/UI/NavRieltor";
 export default {
   name: "ObjectPage",
-  components: {navClient,navRieltor},
+  components: {navRieltor},
   data() {
     return {
       isAuthorized: localStorage.getItem('token') != null,
@@ -112,6 +109,16 @@ export default {
       this.isRealtor = res.data.is_realtor
       console.log(this.isRealtor)
     },
+    async addFavorite() {
+      axios.get('http://95.154.68.102/api/adverts/' + this.post.id + '/?favorite=kalich/')
+      // eslint-disable-next-line vue/no-mutating-props
+      this.post.is_favorite = true
+    },
+    async awayFavorite() {
+      axios.get('http://95.154.68.102/api/adverts/' + this.post.id + '/?favorite=kalich/')
+      // eslint-disable-next-line vue/no-mutating-props
+      this.post.is_favorite = false
+    }
   },
   mounted() {
     this.getCurrentObject()
