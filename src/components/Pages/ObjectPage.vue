@@ -1,5 +1,5 @@
 <template>
-  <NavRieltor></NavRieltor>
+  <nav-rieltor></nav-rieltor>
   <div class="container first-container">
 
     <div id="carouselExampleControls" class="carousel-edit carousel slide" data-bs-ride="carousel">
@@ -52,13 +52,13 @@
           <div class="cardOwner-wrapper d-flex  justify-content-center">
             <img class="cardOwner-img" :src="user.avatar" alt="NO PHOTO??">
           </div>
-          <div class="cardOwner-wrapper d-flex  justify-content-center">
+          <div class="cardOwner-wrapper d-flex  justify-content-center" >
             <p class="cardOwner-username">{{user.username}}</p>
           </div>
           <div class="cardOwner-wrapper d-flex  justify-content-center">
             <p class="cardOwner-role">Владелец</p>
           </div>
-          <div class="cardOwner-wrapper d-flex  justify-content-center">
+          <div class="cardOwner-wrapper d-flex  justify-content-center" @click="this.$router.push('/users/' + this.user.id)">
             <button class="btn btn-primary cardOwner-btn">Профиль</button>
           </div>
           <div class="cardOwner-wrapper d-flex  justify-content-center">
@@ -82,10 +82,10 @@
 
 
 import axios from "axios";
-import navRieltor from "@/components/UI/NavRieltor";
+import NavRieltor from "@/components/UI/NavRieltor";
 export default {
   name: "ObjectPage",
-  components: {navRieltor},
+  components: {NavRieltor},
   data() {
     return {
       isAuthorized: localStorage.getItem('token') != null,

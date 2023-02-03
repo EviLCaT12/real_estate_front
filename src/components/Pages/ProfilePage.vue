@@ -9,10 +9,10 @@
         <div class=" d-flex  justify-content-center">
           <p class="underavatar-p">{{user.username}}</p>
         </div>
-        <form @submit="changeAvatar" class="form-file">
+        <form @submit="changeAvatar" class="form-file" v-if="isCurrentUser & isAuthorized">
           <input type="file" ref="file" id="input__file" class="form-control" @input="handleFileUpload">
         </form>
-        <div class=" div-btn-change d-flex  justify-content-center">
+        <div class=" div-btn-change d-flex  justify-content-center" v-if="isCurrentUser & isAuthorized">
           <button class="btn">Поменять</button>
         </div>
       </div>
@@ -27,7 +27,6 @@
     </div>
     <div class="objects-content-header d-flex">
       <p class="objects-content-header-H">Избранные объекты пользователя {{user.username}}:</p>
-      <p class="objects-content-header-rating">(Рейтинг: 3)</p>
     </div>
   </div>
 
@@ -39,9 +38,6 @@
         <div class="cardObject-maincontent-textblock">
           <a href="#" class="cardObject-title">{{post.title}}</a>
 
-          <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path class="svg-star-unclicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
 
           <!-- Если объект в избранном то... -->
           <!--          <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">-->

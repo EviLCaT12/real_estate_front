@@ -2,7 +2,7 @@
   <table class="table table-bordered">
     <thead id="tableHead">
     <tr>
-      <th colspan="4">Список ваших текущих клиентов</th>
+      <th colspan="4">Один из ваших активных клиентов</th>
     </tr>
     </thead>
     <thead>
@@ -16,76 +16,44 @@
 
     <tbody>
     <tr>
-      <td>Сюда Имя</td>
-      <td>Сюда телефон</td>
-      <td>Сюда почту</td>
+      <td>{{clientData.username}}</td>
+      <td>{{clientData.phone}}</td>
+      <td>{{clientData.email}}</td>
       <td>
-        <button type="button" class="btn btn-primary" id="stdButton" >Профиль</button>
+        <button type="button" class="btn btn-primary" id="stdButton" @click="this.$router.push('/users/' + this.clientData.id)">Профиль</button>
         <button type="button" class="btn btn-danger" id="dngButton">Завершить</button>
       </td>
     </tr>
     </tbody>
-
-
-
-
-
-
-    <tbody>
-    <tr>
-      <td>Сюда Имя</td>
-      <td>Сюда телефон</td>
-      <td>Сюда почту</td>
-      <td>
-        <button type="button" class="btn btn-primary" id="stdButton" >Профиль</button>
-        <button type="button" class="btn btn-danger" id="dngButton">Завершить</button>
-      </td>
-    </tr>
-    </tbody>
-    <tbody>
-    <tr>
-      <td>Сюда Имя</td>
-      <td>Сюда телефон</td>
-      <td>Сюда почту</td>
-      <td>
-        <button type="button" class="btn btn-primary" id="stdButton" >Профиль</button>
-        <button type="button" class="btn btn-danger" id="dngButton">Завершить</button>
-      </td>
-    </tr>
-    </tbody>
-    <tbody>
-    <tr>
-      <td>Сюда Имя</td>
-      <td>Сюда телефон</td>
-      <td>Сюда почту</td>
-      <td>
-        <button type="button" class="btn btn-primary" id="stdButton" >Профиль</button>
-        <button type="button" class="btn btn-danger" id="dngButton">Завершить</button>
-      </td>
-    </tr>
-    </tbody>
-    <tbody>
-    <tr>
-      <td>Сюда Имя</td>
-      <td>Сюда телефон</td>
-      <td>Сюда почту</td>
-      <td>
-        <button type="button" class="btn btn-primary" id="stdButton" >Профиль</button>
-        <button type="button" class="btn btn-danger" id="dngButton">Завершить</button>
-      </td>
-    </tr>
-    </tbody>
-
-
-
 
 
   </table>
 </template>
 
 <script>
+import axios from "axios";
 export default {
-  name: "ClientsTable"
+  name: "ClientsTable",
+  props: {
+    client: {
+      type: Object,
+      required: true
+    }
+  },
+  data () {
+    return {
+      clientData: {}
+    }
+  },
+  methods: {
+    async getClientData() {
+      const res = await axios.get(this.client)
+      this.clientData = res.data
+    }
+  },
+  mounted() {
+    this.getClientData()
+  }
 }
 </script>
 

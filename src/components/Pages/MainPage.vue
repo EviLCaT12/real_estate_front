@@ -63,7 +63,7 @@
     <div class="row search-downrow">
       <div class="col">
         <p class="p-search">Тип объекта</p>
-        <select v-model="obj.obj_type">
+        <select v-model="obj.advert_type">
           <option>Квартира</option>
           <option>Дом</option>
           <option>Земельный участок</option>
@@ -122,7 +122,7 @@ export default {
       obj: {
         city: "",
         street: "",
-        obj_type: "",
+        advert_type: "",
         price_min: "",
         price_max: "",
         floor: ""
@@ -158,14 +158,12 @@ export default {
       }
       const response = await axios.get('http://95.154.68.102/api/adverts/?' + req)
       this.posts = response.data
-      console.log(req)
     },
     async checkRealtor() {
       const res = await axios.get('http://95.154.68.102/api/users/me/', {
         token: localStorage.getItem('token')
       })
       this.isRealtor = res.data.is_realtor
-      console.log(this.isRealtor)
     }
   },
   mounted() {
