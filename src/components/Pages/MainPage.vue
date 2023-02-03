@@ -10,6 +10,7 @@
       <div class="col">
         <p class="p-search">Город</p>
         <input
+            v-model="obj.city"
             class="form-control inp"
             type="text"
             placeholder="Владивосток"
@@ -18,6 +19,7 @@
       <div class="col">
         <p class="p-search">Улица</p>
         <input
+            v-model="obj.street"
             class="form-control inp"
             type="text"
             placeholder="Алеутская"
@@ -42,6 +44,7 @@
       <div class="col">
         <p class="p-search">Стоимость от</p>
         <input
+            v-model="obj.low_limit_price"
             class="form-control inp inp-small"
             type="text"
             placeholder="18"
@@ -50,6 +53,7 @@
       <div class="col">
         <p class="p-search">Стоимость до</p>
         <input
+            v-model="obj.top_limit_price"
             class="form-control inp inp-middle"
             type="text"
             placeholder="18"
@@ -59,7 +63,7 @@
     <div class="row search-downrow">
       <div class="col">
         <p class="p-search">Тип объекта</p>
-        <select>
+        <select v-model="obj.obj_type">
           <option>Квартира</option>
           <option>Дом</option>
           <option>Земельный участок</option>
@@ -94,7 +98,7 @@
         <label class="checkbox-label">Избранное</label>
         <input type="checkbox">
         <div class="btn-div  ">
-          <button class="btn btn-primary">Поиск</button>
+          <button class="btn btn-primary" @click="findObject">Поиск</button>
         </div>
       </div>
     </div>
@@ -109,7 +113,7 @@
         <div class="cardObject-maincontent-textblock">
           <a @click="this.$router.push('/object/' + post.id)" class="cardObject-title">{{post.title}}</a>
 
-          <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" @click="addToFavorite">
             <path class="svg-star-unclicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
 
@@ -118,17 +122,17 @@
           <!--            <path class="svg-star-clicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>-->
           <!--          </svg>-->
 
-          <p class="cardObject-undertitle">{{ post.floor }}</p>
-          <p class="cardObject-adress">{{ post.street }}</p>
-          <p class="cardObject-cost">{{post.price}}</p>
-          <p class="cardObject-info">{{post.description}}</p>
+          <p class="cardObject-undertitle">Этаж: {{ post.floor }}</p>
+          <p class="cardObject-adress">Улица: {{ post.street }}</p>
+          <p class="cardObject-cost">Цена: {{post.price}}</p>
+          <p class="cardObject-info">Описание: {{post.description}}</p>
 
         </div>
       </div>
       <div class="col-3">
         <div class="cardOwner">
           <div class="cardOwner-wrapper d-flex  justify-content-center">
-            <img class="cardOwner-img" src="https://s0.rbk.ru/v6_top_pics/media/img/9/14/754979567615149.jpg" alt="NO PHOTO??">
+            <img class="cardOwner-img" :src="users[post.id].avatar" alt="NO PHOTO??">
           </div>
           <div class="cardOwner-wrapper d-flex  justify-content-center">
             <p class="cardOwner-username">{{users[post.id].username}}</p>
@@ -168,6 +172,14 @@ export default {
         username: "",
         phone: ""
       }],
+      obj: {
+        city: "",
+        street: "",
+        obj_type: "",
+        low_limit_price: "",
+        top_limit_price: "",
+        floor: "",
+      }
     }
   },
   methods: {
@@ -184,6 +196,29 @@ export default {
         user = res.data
         this.users.push(user)
       }
+    },
+    async findObject() {
+      let name = []
+      let value = []
+      for (var key in this.obj) {
+        if (this.obj[key] !== "") {
+          value.push(this.obj[key])
+          name.push(key)
+        }
+      }
+      let req = ''
+      for (let i = 0; i < name.length; i++) {
+        if (i === name.length - 1) {
+          req += name[i] + '=' + value[i]
+        }
+        else
+          req += name[i] + '=' + value[i] + '&';
+      }
+      const response = await axios.get('http://95.154.68.102/api/adverts?' + req)
+      this.posts = response.data
+    },
+    async addToFavorite() {
+
     }
   },
   mounted() {
