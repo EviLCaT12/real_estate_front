@@ -25,7 +25,7 @@
 
     <div class="row cardObject-container">
       <div class="cardObject-maincontent-textblock col">
-        <a href="#" class="cardObject-title">Просторная двушка с ремонтом! Ахуеть!</a>
+        <a href="#" class="cardObject-title">{{post.title}}</a>
 
         <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path class="svg-star-unclicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
@@ -35,21 +35,14 @@
         <!--            <path class="svg-star-clicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>-->
         <!--          </svg>-->
         <div class="address-block d-flex">
-          <p class="address-p-1">2 к, 97 м<sup>2</sup>, 5 этаж</p>
-          <p class="address-p-2">Улица Пушкина 37, квартира 777</p>
+          <p class="address-p-1">{{post.floor}}</p>
+          <p class="address-p-2">{{post.street}}</p>
         </div>
         <div class="price-block d-flex">
-          <p class="price-p-1">30 070 000 ₽</p>
-          <p class="price-p-2">310 000 ₽/м<sup>2</sup></p>
+          <p class="price-p-1">{{post.price}}</p>
         </div>
         <div class="info-block d-flex">
-          <p class="info-p">30 070 000 ₽
-            Lorem ipsum dolor sit amet, consectetur adipiscing
-            elit. Facilisi fringilla egestas condimentum diam lectus tristique metus.
-            Vitae eget donec at mattis etiam venenatis, faucibus vitae. Laoreet amet,
-            elementum, tempor viverra neque leo. A convallis in velit vitae varius purus
-            vitae. varius purus vitae. varius purus vitae. varius purus vitae. varius purus
-            vitae. varius purus vitae. varius purus vitae. varius purus vitae...
+          <p class="info-p"> {{post.description}}
           </p>
 
         </div>
@@ -61,7 +54,7 @@
             <img class="cardOwner-img" src="https://s0.rbk.ru/v6_top_pics/media/img/9/14/754979567615149.jpg" alt="NO PHOTO??">
           </div>
           <div class="cardOwner-wrapper d-flex  justify-content-center">
-            <p class="cardOwner-username">Abobus20071338</p>
+            <p class="cardOwner-username">{{user.username}}</p>
           </div>
           <div class="cardOwner-wrapper d-flex  justify-content-center">
             <p class="cardOwner-role">Владелец</p>
@@ -70,7 +63,7 @@
             <button class="btn btn-primary cardOwner-btn">Профиль</button>
           </div>
           <div class="cardOwner-wrapper d-flex  justify-content-center">
-            <button class="btn btn-primary cardOwner-btn cardOwner-btn-number">+79249999999</button>
+            <button class="btn btn-primary cardOwner-btn cardOwner-btn-number">{{user.phone}}</button>
           </div>
 
         </div>
@@ -89,8 +82,28 @@
 <script>
 
 
+import axios from "axios";
+
 export default {
   name: "ObjectPage",
+  data() {
+    return {
+      post: {},
+      user: {}
+    }
+  },
+  methods: {
+    async getCurrentObject() {
+      const response = await axios.get('http://95.154.68.102/api/adverts/' + this.$route.params.id)
+      this.post = response.data
+      const res = await axios.get(this.post.owner)
+      this.user = res.data
+      console.log(this.post)
+    },
+  },
+  mounted() {
+    this.getCurrentObject()
+  }
 }
 </script>
 

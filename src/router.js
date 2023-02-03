@@ -7,6 +7,7 @@ import RieltorsPage from "@/components/Pages/RieltorsPage";
 import ObjectsPage from "@/components/Pages/ObjectsPage.vue";
 import MyObjects from "@/components/Pages/MyObjects";
 import ObjectPage from "@/components/Pages/ObjectPage";
+import ProfilePage from "@/components/Pages/ProfilePage";
 
 export default createRouter({
     history:createWebHashHistory(),
@@ -18,6 +19,7 @@ export default createRouter({
         {path: '/clients', component: ClientPage},
         {path: '/rieltors', component: RieltorsPage},
         {path: '/add_obj', component: ObjectsPage},
-        {path: '/object/:id', component: ObjectPage}
+        {path: '/object/:id', component: ObjectPage},
+        {path: '/users/:id', component: ProfilePage}
     ]
 })

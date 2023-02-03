@@ -4,37 +4,37 @@
     <div class="row profile-info-row d-flex">
       <div class="profile-info-img-col col-2 cardOwner-wrapper">
         <div class="cardOwner-wrapper d-flex  justify-content-center">
-          <img class="cardOwner-img" src="https://s0.rbk.ru/v6_top_pics/media/img/9/14/754979567615149.jpg" alt="NO PHOTO??">
+          <img class="cardOwner-img" :src="user.avatar" alt="NO PHOTO??">
         </div>
         <div class="cardOwner-wrapper d-flex  justify-content-center">
-          <p class="underavatar-p">USERNAME</p>
+          <p class="underavatar-p">{{user.username}}</p>
         </div>
         <div class="cardOwner-wrapper d-flex  justify-content-center">
-          <button class="btn btn-primary cardOwner-btn">Изменить</button>
+          <button class="btn btn-primary cardOwner-btn" v-if="isAuthorized && isCurrentUser">Изменить</button>
         </div>
       </div>
       <div class="profile-info-text-col col-3 ">
-        <p class="profile-info-p">Имя Фамилия Отчество</p>
-        <p class="profile-info-p">Телефон: +79249999999</p>
+        <p class="profile-info-p">{{user.phone}}</p>
       </div>
       <div class="profile-info-text-col col ">
-        <p class="profile-info-p">РОЛЬ</p>
-        <p class="profile-info-p">Почта: somepochtarussia2019@mail.ru</p>
+        <p class="profile-info-p" v-if="user.is_realtor">Риеэтор</p>
+        <p class="profile-info-p" v-else>Пользователь</p>
+        <p class="profile-info-p">{{user.mail}}</p>
       </div>
     </div>
     <div class="objects-content-header d-flex">
-      <p class="objects-content-header-H">Завершенные объекты пользователя Username:</p>
+      <p class="objects-content-header-H">Избранные объекты пользователя {{user.username}}:</p>
       <p class="objects-content-header-rating">(Рейтинг: 3)</p>
     </div>
   </div>
 
-  <div class="container first-container">
+  <div class="container first-container" v-for="post in user.favorite_adverts" :key="post.id">
     <div class="row cardObject-container">
       <div class="col d-flex cardObject-maincontent">
         <img class="cardObject-img" src="https://www.fontanka.ru/longreads/69055537/2020/images/tild3236-3039-4438-b935-366561386233__48.jpg" alt="dd">
 
         <div class="cardObject-maincontent-textblock">
-          <a href="#" class="cardObject-title">Просторная двушка с ремонтом! Ахуеть!</a>
+          <a href="#" class="cardObject-title">{{post.title}}</a>
 
           <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path class="svg-star-unclicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
@@ -45,16 +45,10 @@
           <!--            <path class="svg-star-clicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>-->
           <!--          </svg>-->
 
-          <p class="cardObject-undertitle">2 к, 97 м<sup>2</sup>, 5 этаж</p>
-          <p class="cardObject-adress">Улица Пушкина 37, квартира 777</p>
-          <p class="cardObject-cost">30 070 000 ₽</p>
-          <p class="cardObject-costOfMeter">310 000 ₽/м<sup>2</sup></p>
-          <p class="cardObject-info">Lorem ipsum dolor sit amet, consectetur adipiscing
-            elit. Facilisi fringilla egestas condimentum diam lectus tristique metus.
-            Vitae eget donec at mattis etiam venenatis, faucibus vitae. Laoreet amet,
-            elementum, tempor viverra neque leo. A convallis in velit vitae varius purus
-            vitae. varius purus vitae. varius purus vitae. varius purus vitae. varius purus
-            vitae. varius purus vitae. varius purus vitae. varius purus vitae...</p>
+          <p class="cardObject-undertitle">{{post.floor}}</p>
+          <p class="cardObject-adress">{{post.street}},</p>
+          <p class="cardObject-cost">{{post.price}}</p>
+          <p class="cardObject-info">{{post.description}}}</p>
 
         </div>
       </div>
@@ -63,40 +57,6 @@
     </div>
   </div>
 
-  <div class="container first-container">
-    <div class="row cardObject-container">
-      <div class="col d-flex cardObject-maincontent">
-        <img class="cardObject-img" src="https://www.fontanka.ru/longreads/69055537/2020/images/tild3236-3039-4438-b935-366561386233__48.jpg" alt="dd">
-
-        <div class="cardObject-maincontent-textblock">
-          <a href="#" class="cardObject-title">Просторная двушка с ремонтом! Ахуеть!</a>
-
-          <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path class="svg-star-unclicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-
-          <!-- Если объект в избранном то... -->
-          <!--          <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-          <!--            <path class="svg-star-clicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>-->
-          <!--          </svg>-->
-
-          <p class="cardObject-undertitle">2 к, 97 м<sup>2</sup>, 5 этаж</p>
-          <p class="cardObject-adress">Улица Пушкина 37, квартира 777</p>
-          <p class="cardObject-cost">30 070 000 ₽</p>
-          <p class="cardObject-costOfMeter">310 000 ₽/м<sup>2</sup></p>
-          <p class="cardObject-info">Lorem ipsum dolor sit amet, consectetur adipiscing
-            elit. Facilisi fringilla egestas condimentum diam lectus tristique metus.
-            Vitae eget donec at mattis etiam venenatis, faucibus vitae. Laoreet amet,
-            elementum, tempor viverra neque leo. A convallis in velit vitae varius purus
-            vitae. varius purus vitae. varius purus vitae. varius purus vitae. varius purus
-            vitae. varius purus vitae. varius purus vitae. varius purus vitae...</p>
-
-        </div>
-      </div>
-
-
-    </div>
-  </div>
 
 
 
@@ -106,11 +66,44 @@
 <script>
 
 import NavClient from "@/components/UI/NavClient";
-
+import axios from "axios";
 export default {
   name: "ProfilePage",
-  components: {NavClient}
-
+  components: {NavClient},
+  data() {
+    return {
+      user: {},
+      currentUserId: "",
+      isAuthorized: localStorage.getItem('token') != null,
+      isCurrentUser: false,
+      file: ''
+    }
+  },
+  methods: {
+   async checkUser() {
+      if (this.isAuthorized) {
+        axios.defaults.headers.common['Authorization'] = `Token ${localStorage.getItem('token')}`
+        const response = await axios.get('http://95.154.68.102/api/auth/users/me')
+        this.isCurrentUser = (response.data.id === this.$route.params.id)
+        this.currentUserId = response.data.id
+      }
+    },
+    async getUserData() {
+     const res = await axios.get('http://95.154.68.102/api/users/' + this.$route.params.id)
+      this.user = res.data
+      this.file = this.user.avatar
+    }
+  },
+  mounted() {
+    this.checkUser()
+    this.getUserData()
+  },
+  watch: {
+    $route() {
+      this.checkUser()
+      this.getUserData()
+    }
+  }
 }
 </script>
 

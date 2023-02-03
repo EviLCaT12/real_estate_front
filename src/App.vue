@@ -1,20 +1,17 @@
 <template>
-
-  <profile-page></profile-page>
+  <div>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
 
-import ProfilePage from "@/components/Pages/ProfilePage";
 
 
 
 
 export default {
   name: 'App',
-  components: {
-    ProfilePage,
-  }
 }
 </script>
 

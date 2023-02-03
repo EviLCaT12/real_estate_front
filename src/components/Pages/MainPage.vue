@@ -107,7 +107,7 @@
         <img class="cardObject-img" src="https://www.fontanka.ru/longreads/69055537/2020/images/tild3236-3039-4438-b935-366561386233__48.jpg" alt="dd">
 
         <div class="cardObject-maincontent-textblock">
-          <a href="#" class="cardObject-title">{{post.title}}</a>
+          <a @click="this.$router.push('/object/' + post.id)" class="cardObject-title">{{post.title}}</a>
 
           <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path class="svg-star-unclicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
@@ -137,7 +137,7 @@
             <p class="cardOwner-role">Владелец</p>
           </div>
           <div class="cardOwner-wrapper d-flex  justify-content-center">
-            <button class="btn btn-primary cardOwner-btn">Профиль</button>
+            <button class="btn btn-primary cardOwner-btn" @click="this.$router.push('/users/' + users[post.id].id)">Профиль</button>
           </div>
           <div class="cardOwner-wrapper d-flex  justify-content-center">
             <button class="btn btn-primary cardOwner-btn cardOwner-btn-number">{{users[post.id].phone}}</button>
@@ -183,7 +183,6 @@ export default {
         const res = await axios.get(this.posts[i].owner)
         user = res.data
         this.users.push(user)
-        console.log(user)
       }
     }
   },
