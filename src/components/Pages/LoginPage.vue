@@ -44,14 +44,39 @@
 
   <div class="container container-2 d-flex justify-content-center rounded">
     <div class="link-div row justify-content-center ">
-      <p class="p-link">Еще нет аккаунта? <a class="link" @click="$router.push('/reg')">Зарегистрируйтесь</a></p>
+      <p class="p-link">Еще нет аккаунта? <router-link to="/reg"> Зарегистрироваться </router-link></p>
     </div>  </div>
 </template>
 
 
 <script>
+
+import axios from "axios";
+
 export default {
-  name: "LoginPage"
+  name: "LoginPage",
+  data() {
+    return {
+      isAuthorized: localStorage.getItem('token') != null,
+      login: '',
+      password: '',
+      token: '',
+    }
+  },
+  methods: {
+    authorize() {
+      axios.post('http://95.154.68.102/api/token/login/',{
+        username: this.login,
+        password: this.password
+      }).then((response) => {
+        localStorage.setItem('token', response.data.auth_token);
+        axios.defaults.headers.common['Authorization'] = `Token ${response.data.auth_token}`
+        this.$router.push('/')
+      }).catch(function () {
+        alert("Неправильный логин/пароль")
+      })
+    },
+  }
 }
 </script>
 
@@ -166,7 +191,6 @@ export default {
   width: 380px;
   height: 50px;
   border-color: #5F77BF;
-
 }
 
 @media screen and (max-width: 550px) {

@@ -21,22 +21,21 @@
             <button class="btn block " @click="$router.push('/')" >Объекты</button>
           </li>
           <li class="nav-item px-lg-3">
-            <button class="btn block" v-if="isAuthorized" @click="$router.push('/mynews')">Риэлторы</button>
+            <button class="btn block" v-if="isAuthorized" @click="$router.push('/rieltors')">Риэлторы</button>
             <button class="btn block" v-else @click="$router.push('/login')">Риэлторы</button>
           </li>
           <li class="nav-item px-lg-3">
-            <button class="btn block" v-if="isAuthorized" @click="$router.push('/chats')" >Мои объекты</button>
+            <button class="btn block" v-if="isAuthorized" @click="$router.push('/object')" >Мои объекты</button>
             <button class="btn block" v-else @click="$router.push('/login')" >Мои объекты</button>
           </li>
         </ul>
         <div class="second-content-navbar">
-          <button class="svg write float-start" v-if="isAuthorized" @click="$router.push('/createpost')">
+          <button class="svg write float-start" v-if="isAuthorized" @click="$router.push('/objects')">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
               <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
               <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
             </svg>
           </button>
-
           <button class="svg write float-start" v-else @click="$router.push('/login')">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
               <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -60,8 +59,32 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "NavClient"
+  name: "NavClient",
+  data() {
+    return {
+      isAuthorized: localStorage.getItem('token') != null,
+      token: localStorage.getItem('token'),
+      userId: ''
+    }
+  },
+  methods: {
+    logout() {
+      this.token = localStorage.getItem('token')
+      localStorage.removeItem('token')
+      axios.post('http://95.154.68.102/api/auth/token/logout/',{headers: {Authorization: `Token ${this.token}`}})
+      this.token = ''
+      this.$router.go(0)
+    },
+    getCurrentUser() {
+      axios.get('http://95.154.68.102/api/users/current').then((res) => {
+        this.userId = res.data.id
+        this.$router.push("/user/" + this.userId) //FIXME Получить текущего юзера
+      })
+    }
+  }
 }
 </script>
 
@@ -157,6 +180,7 @@ button{
 
 
 @media (max-width: 1350px){
+
   .logo{
     font-size: 35px;
   }
