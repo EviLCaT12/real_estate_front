@@ -88,9 +88,9 @@
 
 <script>
 
+
 export default {
   name: "ObjectPage",
-
 }
 </script>
 

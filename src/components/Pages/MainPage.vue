@@ -101,7 +101,7 @@
 
   </div>
 
-  <div class="container first-container" v-for="post in posts" :key="post.id">
+  <div class="container first-container" v-for="post in posts" :key="post.id" >
     <div class="row cardObject-container">
       <div class="col d-flex cardObject-maincontent">
         <img class="cardObject-img" src="https://www.fontanka.ru/longreads/69055537/2020/images/tild3236-3039-4438-b935-366561386233__48.jpg" alt="dd">
@@ -109,16 +109,17 @@
         <div class="cardObject-maincontent-textblock">
           <a href="#" class="cardObject-title">{{post.title}}</a>
 
-              <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path class="svg-star-unclicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+          <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path class="svg-star-unclicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
 
           <!-- Если объект в избранном то... -->
-<!--          <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-<!--            <path class="svg-star-clicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>-->
-<!--          </svg>-->
+          <!--          <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+          <!--            <path class="svg-star-clicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>-->
+          <!--          </svg>-->
 
-          <p class="cardObject-adress">{{post.address}}</p>
+          <p class="cardObject-undertitle">{{ post.floor }}</p>
+          <p class="cardObject-adress">{{ post.street }}</p>
           <p class="cardObject-cost">{{post.price}}</p>
           <p class="cardObject-info">{{post.description}}</p>
 
@@ -127,19 +128,19 @@
       <div class="col-3">
         <div class="cardOwner">
           <div class="cardOwner-wrapper d-flex  justify-content-center">
-          <img class="cardOwner-img" src="https://s0.rbk.ru/v6_top_pics/media/img/9/14/754979567615149.jpg" alt="NO PHOTO??">
+            <img class="cardOwner-img" src="https://s0.rbk.ru/v6_top_pics/media/img/9/14/754979567615149.jpg" alt="NO PHOTO??">
           </div>
           <div class="cardOwner-wrapper d-flex  justify-content-center">
-            <p class="cardOwner-username">Abobus20071338</p>
+            <p class="cardOwner-username">{{users[post.id].username}}</p>
           </div>
           <div class="cardOwner-wrapper d-flex  justify-content-center">
             <p class="cardOwner-role">Владелец</p>
           </div>
           <div class="cardOwner-wrapper d-flex  justify-content-center">
-              <button class="btn btn-primary cardOwner-btn">Профиль</button>
+            <button class="btn btn-primary cardOwner-btn">Профиль</button>
           </div>
           <div class="cardOwner-wrapper d-flex  justify-content-center">
-            <button class="btn btn-primary cardOwner-btn cardOwner-btn-number">+79249999999</button>
+            <button class="btn btn-primary cardOwner-btn cardOwner-btn-number">{{users[post.id].phone}}</button>
           </div>
 
         </div>
@@ -161,25 +162,30 @@ export default {
   data() {
     return {
       isAuthorized: localStorage.getItem('token') != null,
-      posts: [{
-        title: "",
-        address: "",
-        description: "",
-        date: "",
-        price: "",
-        preview: "",
+      posts: [],
+      users: [ {
+        id: "",
+        username: "",
+        phone: ""
       }],
     }
   },
   methods: {
     async fetchPosts() {
-      if (this.isAuthorized)
-        axios.defaults.headers.common['Authorization'] = `Token ${localStorage.getItem('token')}`
-      else
-        console.log("I'm not authorized!")
-      const response = await axios.get('http://95.154.68.102/api/api/adverts/')
+     // if (this.isAuthorized)
+      //  axios.defaults.headers.common['Authorization'] = `Token ${localStorage.getItem('token')}`
+     // else
+       // console.log("I'm not authorized!")
+      const response = await axios.get('http://95.154.68.102/api/adverts/')
       this.posts = response.data
-    },
+      for (let i = 0; i < this.posts.length; ++i) {
+        let user = Object
+        const res = await axios.get(this.posts[i].owner)
+        user = res.data
+        this.users.push(user)
+        console.log(user)
+      }
+    }
   },
   mounted() {
     this.fetchPosts()
