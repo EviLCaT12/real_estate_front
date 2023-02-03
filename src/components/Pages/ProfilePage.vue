@@ -3,21 +3,19 @@
   <div v-else><nav-client></nav-client></div>
   <div class="container first-container">
     <div class="row profile-info-row d-flex">
-      <div class="profile-info-img-col col-2 cardOwner-wrapper">
-        <div class="cardOwner-wrapper d-flex  justify-content-center">
+      <div class="profile-info-img-col col-3 ">
+        <div class=" d-flex  justify-content-center">
           <img class="cardOwner-img" :src="user.avatar" alt="NO PHOTO??">
         </div>
-        <div class="cardOwner-wrapper d-flex  justify-content-center">
+        <div class=" d-flex  justify-content-center">
           <p class="underavatar-p">{{user.username}}</p>
         </div>
-        <form @submit="changeAvatar">
-          <div class="form-input">
-            <input type="file" ref="file" @input="handleFileUpload">
-          </div>
-          <div class="form-btn">
-            <button class="btn-photo">Поменять</button>
-          </div>
+        <form @submit="changeAvatar" class="form-file">
+          <input type="file" ref="file" id="input__file" class="form-control" @input="handleFileUpload">
         </form>
+        <div class=" div-btn-change d-flex  justify-content-center">
+          <button class="btn">Поменять</button>
+        </div>
       </div>
       <div class="profile-info-text-col col-3 ">
         <p class="profile-info-p">{{user.phone}}</p>
@@ -133,6 +131,10 @@ export default {
 
 <style scoped>
 
+.form-file{
+  margin-bottom: 10px;
+}
+
 .objects-content-header{
   margin-top: 10px;
 }
@@ -204,6 +206,8 @@ export default {
   border-width: 2px;
   border-color: #5F77BF;
   width: 166px;
+  padding: 0;
+
 
 }
 
@@ -388,11 +392,6 @@ svg{
 .svg-star-clicked:hover{
   color: white;
 }
-
-
-
-
-
 
 .cardOwner-btn-number{
   cursor: default;
