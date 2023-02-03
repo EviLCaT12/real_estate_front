@@ -34,11 +34,11 @@
         </svg>
 
         <div class="address-block d-flex">
-          <p class="address-p-1">{{post.floor}}</p>
-          <p class="address-p-2">{{post.street}}</p>
+          <p class="address-p-1">Этаж: {{post.floor}}</p>
+          <p class="address-p-2">Улица: {{post.street}}</p>
         </div>
         <div class="price-block d-flex">
-          <p class="price-p-1">{{post.price}}</p>
+          <p class="price-p-1">Цена: {{post.price}} ₽</p>
         </div>
         <div class="info-block d-flex">
           <p class="info-p"> {{post.description}}

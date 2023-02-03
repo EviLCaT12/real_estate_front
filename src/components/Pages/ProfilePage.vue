@@ -17,11 +17,11 @@
         </div>
       </div>
       <div class="profile-info-text-col col-3 ">
-        <p class="profile-info-p">{{user.phone}}</p>
+        <p class="profile-info-p">Телефон: {{user.phone}}</p>
       </div>
       <div class="profile-info-text-col col ">
         <p class="profile-info-p" v-if="user.is_realtor">Риеэлтор</p>
-        <p class="profile-info-p" v-else>Пользователь</p>
+        <p class="profile-info-p" v-else>Собственник</p>
         <p class="profile-info-p">{{user.mail}}</p>
       </div>
     </div>
@@ -46,7 +46,7 @@
 
           <p class="cardObject-undertitle">{{post.floor}}</p>
           <p class="cardObject-adress">{{post.street}},</p>
-          <p class="cardObject-cost">{{post.price}}</p>
+          <p class="cardObject-cost">{{post.price}} ₽</p>
           <p class="cardObject-info">{{post.description}}}</p>
 
         </div>

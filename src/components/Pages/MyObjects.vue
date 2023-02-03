@@ -10,7 +10,7 @@
 
   </div>
 
-  <div class="container first-container" v-for="post in posts" :key="post.id">
+  <div class="container first-container post-container" v-for="post in posts" :key="post.id">
     <div class="row cardObject-container">
       <div class="col d-flex cardObject-maincontent">
         <img class="cardObject-img" :src="post.preview" alt="dd">
@@ -29,7 +29,7 @@
 
           <p class="cardObject-undertitle">{{ post.floor }} этаж</p>
           <p class="cardObject-adress">{{post.street}}</p>
-          <p class="cardObject-cost">{{post.price}}</p>
+          <p class="cardObject-cost">{{post.price}} ₽</p>
           <p class="cardObject-info">{{post.description}}</p>
 
         </div>
@@ -98,6 +98,10 @@ export default {
 </script>
 
 <style scoped>
+
+.post-container{
+  max-height: 350px;
+}
 
 .cardOwner-role{
 
@@ -250,6 +254,9 @@ export default {
   font-size: 15px;
   line-height: 25px;
   color: #000000;
+  max-height: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 

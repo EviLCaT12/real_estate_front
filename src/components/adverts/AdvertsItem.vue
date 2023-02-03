@@ -1,5 +1,5 @@
 <template>
-  <div class="first-container container">
+  <div class="first-container container post-container">
     <div class="row cardObject-container">
       <div class="col d-flex cardObject-maincontent">
         <img class="cardObject-img" src="https://www.fontanka.ru/longreads/69055537/2020/images/tild3236-3039-4438-b935-366561386233__48.jpg" alt="dd">
@@ -18,8 +18,8 @@
 
           <p class="cardObject-undertitle">Этаж: {{ post.floor }}</p>
           <p class="cardObject-adress">Улица: {{ post.street }}</p>
-          <p class="cardObject-cost">Цена: {{post.price}}</p>
-          <p class="cardObject-info">Описание: {{post.description}}</p>
+          <p class="cardObject-cost">Цена: {{post.price}} ₽</p>
+          <p class="cardObject-info">{{post.description}}...</p>
 
         </div>
       </div>
@@ -88,6 +88,10 @@ export default {
 </script>
 
 <style scoped>
+
+.post-container{
+  max-height: 350px;
+}
 
 .cardOwner-btn{
   font-family: 'Inter',serif;
@@ -191,7 +195,8 @@ export default {
   font-size: 20px;
   line-height: 24px;
   color: #000000;
-  margin-bottom: 0;
+  margin-bottom: 10px;
+
 }
 
 .cardObject-costOfMeter{
@@ -210,6 +215,10 @@ export default {
   font-size: 15px;
   line-height: 25px;
   color: #000000;
+  max-height: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /*white-space: nowrap;*/
 }
 
 
