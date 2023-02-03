@@ -1,5 +1,6 @@
 <template>
-
+  <div v-if="isRealtor"><NavRieltor></NavRieltor></div>
+  <div v-else><nav-client></nav-client></div>
   <div class="container first-container">
 
     <div id="carouselExampleControls" class="carousel-edit carousel slide" data-bs-ride="carousel">
@@ -27,7 +28,7 @@
       <div class="cardObject-maincontent-textblock col">
         <a href="#" class="cardObject-title">{{post.title}}</a>
 
-        <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" v-if="isAuthorized">
           <path class="svg-star-unclicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <!-- Если объект в избранном то звездочка желтая... -->
@@ -51,7 +52,7 @@
       <div class="col-3">
         <div class="cardOwner">
           <div class="cardOwner-wrapper d-flex  justify-content-center">
-            <img class="cardOwner-img" src="https://s0.rbk.ru/v6_top_pics/media/img/9/14/754979567615149.jpg" alt="NO PHOTO??">
+            <img class="cardOwner-img" :src="user.avatar" alt="NO PHOTO??">
           </div>
           <div class="cardOwner-wrapper d-flex  justify-content-center">
             <p class="cardOwner-username">{{user.username}}</p>
@@ -83,11 +84,15 @@
 
 
 import axios from "axios";
-
+import navClient from "@/components/UI/NavClient";
+import navRieltor from "@/components/UI/NavRieltor";
 export default {
   name: "ObjectPage",
+  components: {navClient,navRieltor},
   data() {
     return {
+      isAuthorized: localStorage.getItem('token') != null,
+      isRealtor: false,
       post: {},
       user: {}
     }
@@ -96,13 +101,21 @@ export default {
     async getCurrentObject() {
       const response = await axios.get('http://95.154.68.102/api/adverts/' + this.$route.params.id + '/')
       this.post = response.data
-      const res = await axios.get(this.post.owner + '/')
+      const res = await axios.get(this.post.owner)
       this.user = res.data
       console.log(this.post)
+    },
+    async checkRealtor() {
+      const res = await axios.get('http://95.154.68.102/api/users/me/', {
+        token: localStorage.getItem('token')
+      })
+      this.isRealtor = res.data.is_realtor
+      console.log(this.isRealtor)
     },
   },
   mounted() {
     this.getCurrentObject()
+    this.checkRealtor()
   }
 }
 </script>

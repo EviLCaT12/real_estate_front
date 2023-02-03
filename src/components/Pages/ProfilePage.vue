@@ -1,5 +1,6 @@
 <template>
-  <nav-client></nav-client>
+  <div v-if="isRealtor"><NavRieltor></NavRieltor></div>
+  <div v-else><nav-client></nav-client></div>
   <div class="container first-container">
     <div class="row profile-info-row d-flex">
       <div class="profile-info-img-col col-2 cardOwner-wrapper">
@@ -64,12 +65,14 @@
 <script>
 
 import NavClient from "@/components/UI/NavClient";
+import NavRieltor from "@/components/UI/NavRieltor";
 import axios from "axios";
 export default {
   name: "ProfilePage",
-  components: {NavClient},
+  components: {NavClient,NavRieltor},
   data() {
     return {
+      isRealtor: false,
       user: {},
       currentUserId: "",
       isAuthorized: localStorage.getItem('token') != null,
@@ -106,10 +109,17 @@ export default {
       }).catch((error) => {
         console.log(error)
       })
-    }
+    },
+    async checkRealtor() {
+      const res = await axios.get('http://95.154.68.102/api/users/me/', {
+        token: localStorage.getItem('token')
+      })
+      this.isRealtor = res.data.is_realtor
+    },
   },
   mounted() {
     this.checkUser()
+    this.checkRealtor()
     this.getUserData()
   },
   watch: {

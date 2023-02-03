@@ -1,5 +1,6 @@
 <template>
-  <NavRieltor></NavRieltor>
+  <div v-if="isRealtor"><NavRieltor></NavRieltor></div>
+  <div v-else><nav-client></nav-client></div>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -95,83 +96,30 @@
       </div>
 
       <div class="col col-btn">
-        <label class="checkbox-label">Избранное</label>
-        <input type="checkbox">
         <div class="btn-div  ">
           <button class="btn btn-primary" @click="findObject">Поиск</button>
         </div>
       </div>
     </div>
-
   </div>
 
-  <div class="container first-container" v-for="post in posts" :key="post.id" >
-    <div class="row cardObject-container">
-      <div class="col d-flex cardObject-maincontent">
-        <img class="cardObject-img" src="https://www.fontanka.ru/longreads/69055537/2020/images/tild3236-3039-4438-b935-366561386233__48.jpg" alt="dd">
-
-        <div class="cardObject-maincontent-textblock">
-          <a @click="this.$router.push('/object/' + post.id)" class="cardObject-title">{{post.title}}</a>
-
-          <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" @click="addToFavorite">
-            <path class="svg-star-unclicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-
-          <!-- Если объект в избранном то... -->
-          <!--          <svg   width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-          <!--            <path class="svg-star-clicked" d="M13.5 2.25L16.9762 9.2925L24.75 10.4288L19.125 15.9075L20.4525 23.6475L13.5 19.9913L6.5475 23.6475L7.875 15.9075L2.25 10.4288L10.0237 9.2925L13.5 2.25Z" fill="currentcolor" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>-->
-          <!--          </svg>-->
-
-          <p class="cardObject-undertitle">Этаж: {{ post.floor }}</p>
-          <p class="cardObject-adress">Улица: {{ post.street }}</p>
-          <p class="cardObject-cost">Цена: {{post.price}}</p>
-          <p class="cardObject-info">Описание: {{post.description}}</p>
-
-        </div>
-      </div>
-      <div class="col-3">
-        <div class="cardOwner">
-          <div class="cardOwner-wrapper d-flex  justify-content-center">
-            <img class="cardOwner-img" :src="users[post.id].avatar" alt="NO PHOTO??">
-          </div>
-          <div class="cardOwner-wrapper d-flex  justify-content-center">
-            <p class="cardOwner-username">{{users[post.id].username}}</p>
-          </div>
-          <div class="cardOwner-wrapper d-flex  justify-content-center">
-            <p class="cardOwner-role">Владелец</p>
-          </div>
-          <div class="cardOwner-wrapper d-flex  justify-content-center">
-            <button class="btn btn-primary cardOwner-btn" @click="this.$router.push('/users/' + users[post.id].id)">Профиль</button>
-          </div>
-          <div class="cardOwner-wrapper d-flex  justify-content-center">
-            <button class="btn btn-primary cardOwner-btn cardOwner-btn-number">{{users[post.id].phone}}</button>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-  </div>
-
+  <adverts-list :posts="posts"></adverts-list>
 </template>
 
 
 <script>
 import axios from "axios";
 import NavRieltor from "@/components/UI/NavRieltor";
+import NavClient from "@/components/UI/NavRieltor";
+import advertsList from "@/components/adverts/AdvertsList";
 export default {
   name: "MainPage",
-  components: {NavRieltor},
+  components: {NavClient, NavRieltor, advertsList},
   data() {
     return {
       isAuthorized: localStorage.getItem('token') != null,
+      isRealtor: true,
       posts: [],
-      users: [ {
-        id: "",
-        username: "",
-        phone: ""
-      }],
       obj: {
         city: "",
         street: "",
@@ -190,12 +138,6 @@ export default {
         console.log("I'm not authorized!")
       const response = await axios.get('http://95.154.68.102/api/adverts/')
       this.posts = response.data
-      for (let i = 0; i < this.posts.length; ++i) {
-        let user = Object
-        const res = await axios.get(this.posts[i].owner)
-        user = res.data
-        this.users.push(user)
-      }
     },
     async findObject() {
       let name = []
@@ -217,163 +159,26 @@ export default {
       const response = await axios.get('http://95.154.68.102/api/adverts?' + req)
       this.posts = response.data
     },
-    async addToFavorite() {
-
+    async checkRealtor() {
+      const res = await axios.get('http://95.154.68.102/api/users/me/', {
+        token: localStorage.getItem('token')
+      })
+      this.isRealtor = res.data.is_realtor
+      console.log(this.isRealtor)
     }
   },
   mounted() {
     this.fetchPosts()
+    this.checkRealtor()
   }
 }
 </script>
 
 <style scoped>
 
-.cardOwner-btn{
-  font-family: 'Inter',serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 17px;
-
-  color: #000000;
-
-  margin: 0 20% 15px;
-
-  border-radius: 30px;
-}
-
-.cardOwner{
-  background-color: #F3F3F3;
-  border-radius: 10px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-
-}
-
-.cardOwner-img{
-  width: 114px;
-  height: 102px;
-  border-radius: 100%;
-  margin-bottom: 10px;
-
-}
-
-.cardOwner-username{
-  font-family: 'Inter',serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
-  margin-bottom: 0;
-  color: #000000;
-
-}
-
-
-.cardObject-img{
-  width: 419px ;
-  height: 300px ;
-}
-
-.cardObject-maincontent{
-  width: 1000px;
-}
-
-.cardObject-maincontent-textblock{
-  margin-left: 20px;
-}
-
-.cardObject-title{
-  font-family: 'Inter',serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
-  cursor: pointer;
-  text-decoration: none;
-  width: auto;
-  color: #5F77BF;
-}
-
-.cardObject-title:hover{
-  color: #718FE8;
-}
-
-.cardObject-title:active{
-  color: #5F77BF;
-
-}
-
-.cardObject-undertitle{
-  font-family: 'Inter',serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  color: #4E5454;
-  margin-bottom: 4px;
-}
-
-.cardObject-adress{
-  font-family: 'Inter', serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  color: #4E5454;
-  margin-bottom: 10px;
-}
-
-.cardObject-cost{
-  font-family: 'Inter', serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
-  color: #000000;
-  margin-bottom: 0;
-}
-
-.cardObject-costOfMeter{
-  font-family: 'Inter', serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 15px;
-  color: #4E5454;
-}
-
-.cardObject-info{
-  font-family: 'Inter', serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 25px;
-  color: #000000;
-}
-
-
 svg{
   margin-bottom: 10px;
   margin-left: 5px;
-}
-
-.svg-star-unclicked{
-  cursor: pointer;
-  color: white;
-}
-
-.svg-star-unclicked:hover{
-  color: yellow;
-}
-
-.svg-star-clicked{
-  cursor: pointer;
-  color: yellow;
-}
-
-.svg-star-clicked:hover{
-  color: white;
 }
 
 .first-container{
@@ -443,14 +248,6 @@ select{
 
 .btn-primary{
   padding: 0;
-}
-
-.checkbox-label{
-  margin-right: 5px;
-}
-
-.cardOwner-btn-number{
-  cursor: default;
 }
 
 </style>
