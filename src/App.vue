@@ -1,8 +1,10 @@
 <template>
+
   <profile-page></profile-page>
 </template>
 
 <script>
+
 import ProfilePage from "@/components/Pages/ProfilePage";
 
 
